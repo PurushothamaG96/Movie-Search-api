@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+    <style>
+        body{
+            background-color: azure;
+        }
+        .container{
+            width: 80vw;
+            height: 80vh;
+            margin: auto;
+            border-color: rgb(231, 195, 148);
+        }
+        header{
+            min-height: 10px;
+            background-color: black;
+            padding: 2px 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content:space-between;
+            align-items: center;
+
+        }
+        h1{
+            color: aliceblue;
+            width: auto;
+        }
+        h1>span{
+            color:goldenrod;
+        }
+        input{
+            width: 30vw;
+            font-size: 20px;
+            padding: 10px;
+            border-radius:10px;
+        }
+        .btn{
+            font-size: 20px;
+            padding: 10px;
+            border-radius:10px;
+            cursor: pointer;
+        }
+        .btn:hover{
+            background-color: black;
+            color: goldenrod;
+            border: 2px solid whitesmoke;
+        }
+        section{
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Movie <span>Search</span></h1>
+            <div>
+                <input type="text" id="serchBar" placeholder="Search movie here..."/>
+                <button type="button" onclick="handleSearch()" class="btn">Search</button>
+            </div> 
+        </header>
+        <section id="parent">
+
+        </section>
+    </div>
+</body>
+<script>
+    let serchBar = document.getElementById('serchBar')
+    let section = document.getElementById("parent")
+    let datasArr = {}
+    function handleSearch(){
+        fetch(`https://www.omdbapi.com/?apikey=e9f8f3ee&t=${serchBar.value}`)
+        .then((res)=>res.json())
+        .then((data)=>{
+            let temp = ""
+            temp+= `<img src=${data.Poster}/>
+            <h2>Title : ${data.Title}</h2>
+            <h4>Realeased on : ${data.Released}</h4>
+            <p>Rating : ${data.imdbRating}</p>`
+            section.innerHTML = temp
+        }).catch(e=>{
+            console.log(e)
+        })
+       
+
+
+    }
+</script>
+</html>
